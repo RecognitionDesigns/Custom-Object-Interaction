@@ -1,63 +1,44 @@
 #!/usr/bin/env python3
  
 import time
-
 import anki_vector
 from anki_vector.util import degrees
 from anki_vector.events import Events
-
 from anki_vector.objects import CustomObjectMarkers, CustomObjectTypes
 from anki_vector.faces import Face
-
 import json
 import functools
 import os
 
-
 with open('markers.json', 'r') as f:
     mapping = json.load(f)
 
-nextScan = True
-
-
 def handle_object_appeared(robot, event_type, event, evt):
-    global nextScan
     # This will be called whenever an EvtObjectAppeared is dispatched -
     # whenever an Object comes into view.
 #    print(f"--------- Vector started seeing an object --------- \n{evt.obj}")
     print("--------- Vector started seeing an object ---------")
-    if nextScan:
-        nextScan = False
-        object_type = evt.obj.archetype.custom_type
-        print (object_type.name)
-        robot.behavior.say_text(mapping[object_type.name]["description"])
-        if (object_type.name) is "CustomType00":
-#            print ("sucess!")
-            robot.anim.play_animation_trigger('GreetAfterLongTime')
+    object_type = evt.obj.archetype.custom_type
+    print (object_type.name)
+    robot.behavior.say_text(mapping[object_type.name]["description"])
+    if (object_type.name) is "CustomType00":
+        robot.anim.play_animation_trigger('GreetAfterLongTime')
         
-        if (object_type.name) is "CustomType01":
-#            print ("sucess!")
-            robot.anim.play_animation_trigger('PounceWProxForward')
+    if (object_type.name) is "CustomType01":
+        robot.anim.play_animation_trigger('PounceWProxForward')
 
-        if (object_type.name) is "CustomType02":
-#            print ("sucess!")
-            robot.anim.play_animation_trigger('BumpObjectFastGetOut')
+    if (object_type.name) is "CustomType02":
+        robot.anim.play_animation_trigger('BumpObjectFastGetOut')
         
-        if (object_type.name) is "CustomType03":
-#            print ("sucess!")
-            robot.anim.play_animation_trigger('ReactToObstacle')
-    
-        time.sleep(1)
-    
+    if (object_type.name) is "CustomType03":
+        robot.anim.play_animation_trigger('ReactToObstacle')
+      
 def handle_object_disappeared(event_type, event, evt):
-    global nextScan
     # This will be called whenever an EvtObjectDisappeared is dispatched -
     # whenever an Object goes out of view.
     print("--------- Vector stopped seeing an object ---------")
     time.sleep(1)
-    nextScan = True
-    
-    
+
 def main():
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(enable_custom_object_detection=True, enable_nav_map_feed=True) as robot:
