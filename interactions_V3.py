@@ -56,15 +56,11 @@ def handle_object_disappeared(event_type, event, evt):
     print("--------- Vector stopped seeing an object ---------")
     time.sleep(1)
     nextScan = True
-
     
-#   0050169f
-#   00703d7c    
-
-
+    
 def main():
     args = anki_vector.util.parse_command_args()
-    with anki_vector.Robot('0050169f', enable_custom_object_detection=True, enable_nav_map_feed=True) as robot:
+    with anki_vector.Robot(enable_custom_object_detection=True, enable_nav_map_feed=True) as robot:
         # Add event handlers for whenever Vector sees a new object
         
         robot.behavior.set_head_angle(degrees(5.0))
