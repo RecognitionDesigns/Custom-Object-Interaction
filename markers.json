@@ -1,6 +1,0 @@
-{
-    "CustomType00": {"description": "Type Zero"},
-    "CustomType01": {"description": "Type One"},
-    "CustomType02": {"description": "Type Two"},
-    "CustomType03": {"description": "Type Three", "number": "5", "string": "text string"}
-}
